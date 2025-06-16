@@ -1,0 +1,61 @@
+16-06-2025 17-11-08 - DEBUG - # _do_auth(): self._auth_plugin: 
+16-06-2025 17-11-08 - INFO - package: mysql.connector.plugins
+16-06-2025 17-11-08 - INFO - plugin_name: caching_sha2_password
+16-06-2025 17-11-08 - INFO - AUTHENTICATION_PLUGIN_CLASS: MySQLCachingSHA2PasswordAuthPlugin
+16-06-2025 17-11-08 - DEBUG - new_auth_plugin: caching_sha2_password
+16-06-2025 17-11-08 - INFO - *** Source and Target Tables validation initiated ***
+16-06-2025 17-11-08 - INFO - *** MySQL Connection initiated ***
+16-06-2025 17-11-08 - INFO - *** Oracle Database connection initiated ***
+16-06-2025 17-11-08 - INFO - * Initiated processing of file:TestScenarios_Cost_Dim.json *
+16-06-2025 17-11-08 - INFO - SQueries are {'tc_01_Source & Target Tables': {'s_table': 'cost', 't_table': 'cost_dim'}, 'tc_02_Verifying Source & Target Record counts': {'s_count': 'select count(*) from cost', 't_count': 'select count(*) from cost_dim'}, 'tc_03_Verifying Null values in Target table': {'null_count': 'select count(*) from cost_dim where p_id is null or price is null or sales_date is null', 'null_records': 'select pid from cost_dim where p_id is null or price is null or sales_date is null'}, 'tc_04_Verifying duplicate records in Target table': {'dup_count': 'select count(*) from cost_dim group by p_id having count(p_id)>1', 'dup_records': 'select p_id from cost_dim group by p_id having count(p_id)>1'}, 'tc_05_Verifying Source & Target Columns mapping': {'s_table': 'select p_id,round(price) as price,sales_date from cost order by p_id', 't_table': 'select p_id,price,sales_date from cost_dim order by p_id'}}
+16-06-2025 17-11-08 - INFO - * Source Table:cost  Target Table:cost_dim validations initiated *
+16-06-2025 17-11-08 - INFO - * Source Table Count:32  Target Table Count:33 *
+16-06-2025 17-11-08 - INFO - * Initiated processing of file:TestScenarios_Inventory_Dim.json *
+16-06-2025 17-11-08 - INFO - SQueries are {'tc_01_Source & Target Tables': {'s_table': 'inventory', 't_table': 'inventory_dim'}, 'tc_02_Verifying Source & Target Record counts': {'s_count': 'select count(*) from inventory', 't_count': 'select count(*) from inventory_dim'}, 'tc_03_Verifying Null values in Target table': {'null_count': 'select count(*) from inventory_dim where p_id is null or purchase_stock is null or purchase_stock is null or units_sold is null or Avail_stock is null or sales_date is null', 'null_records': 'select p_id from inventory_dim where p_id is null or purchase_stock is null or purchase_stock is null or units_sold is null or Avail_stock is null or sales_date is null'}, 'tc_04_Verifying duplicate records in Target table': {'dup_count': 'select count(p_id) from inventory_dim group by p_id having count(p_id)>1', 'dup_records': 'select p_id,count(p_id) from inventory_dim group by p_id having count(p_id)>1'}, 'tc_05_Verifying Source & Target Columns mapping': {'s_table': ' select p_id,open_stock,purchase_stock,units_sold,Avail_stock,sales_date from inventory order by p_id', 't_table': 'select p_id,open_stock,purchase_stock,units_sold,Avail_stock,sales_date from inventory_dim order by p_id'}}
+16-06-2025 17-11-08 - INFO - * Source Table:inventory  Target Table:inventory_dim validations initiated *
+16-06-2025 17-11-08 - INFO - * Source Table Count:25  Target Table Count:26 *
+16-06-2025 17-11-08 - INFO - * Initiated processing of file:TestScenarios_Product_Dim.json *
+16-06-2025 17-11-08 - INFO - SQueries are {'tc_01_Source & Target Tables': {'s_table': 'product', 't_table': 'product_dim'}, 'tc_02_Verifying Source & Target Record counts': {'s_count': 'select count(*) from product', 't_count': 'select count(*) from product_dim'}, 'tc_03_Verifying Null values in Target table': {'null_count': 'select count(*) from product_dim where p_id is null or p_name is null or price is null or sales_date is null', 'null_records': 'select p_id from product_dim where p_id is null or p_name is null or price is null or sales_date is null'}, 'tc_04_Verifying duplicate records in Target table': {'dup_count': 'select count(p_id) from product_dim group by p_id having count(p_id)>1', 'dup_records': 'select p_id,count(p_id) from product_dim group by p_id having count(p_id)>1'}, 'tc_05_Verifying Source & Target Columns mapping': {'s_table': 'select p_id ,p_name,round(price) as price, sales_date from product order by p_id', 't_table': 'select p_id,p_name,price,sales_date from product_dim order by p_id'}}
+16-06-2025 17-11-08 - INFO - * Source Table:product  Target Table:product_dim validations initiated *
+16-06-2025 17-11-08 - INFO - * Source Table Count:30  Target Table Count:30 *
+16-06-2025 17-11-08 - INFO - * Initiated processing of file:TestScenarios_Sales_Fact.json *
+16-06-2025 17-11-08 - INFO - SQueries are {'tc_01_Source & Target Tables': {'s_table': 'product', 't_table': 'sales_fact'}, 'tc_02_Verifying Source & Target Record counts': {'s_count': 'select count(*) from (SELECT   p.P_ID  ,  p.P_Name , i.Open_Stock + i.Purchase_Stock as tot_stock , i.Units_Sold as units_sold , (i.Open_Stock + i.Purchase_Stock) - i.Units_Sold as Avail_stock , i.Sales_Date  as sales_date   FROM  inventory i JOIN     product p  ON i.P_ID = p.P_ID JOIN   cost c ON i.P_ID = c.P_ID AND i.Sales_Date = c.Sales_Date) a', 't_count': 'select count(*) from sales_fact'}, 'tc_03_Verifying Null values in Target table': {'null_count': 'SELECT COUNT(*) FROM SALES_FACT WHERE  p_id is null or p_name is null or tot_stock is null or units_sold is null or Avail_stock is null or sales_date is null', 'null_records': 'SELECT p_id FROM SALES_FACT WHERE  p_id is null or p_name is null or tot_stock is null or units_sold is null or Avail_stock is null or sales_date is null'}, 'tc_04_Verifying duplicate records in Target table': {'dup_count': 'select count(*) from (SELECT P_ID, COUNT(p_id) FROM SALES_FACT GROUP BY p_id HAVING COUNT(*) > 1)a', 'dup_records': 'SELECT P_ID, COUNT(p_id) FROM SALES_FACT GROUP BY p_id HAVING COUNT(*) > 1'}, 'tc_05_Verifying Source & Target Columns mapping': {'s_table': 'SELECT  p.p_id  ,  p.P_Name , i.Open_Stock + i.Purchase_Stock as tot_stock, i.Units_Sold as units_sold, (i.Open_Stock + i.Purchase_Stock) - i.Units_Sold as Avail_stock, i.sales_date as sales_date FROM   inventory i JOIN    product p ON i.P_ID = p.P_ID  JOIN cost c ON i.P_ID = c.P_ID AND i.Sales_Date = c.Sales_Date', 't_table': 'select  p_id,p_name,tot_stock,units_sold,Avail_stock,sales_date from sales_fact'}}
+16-06-2025 17-11-08 - INFO - * Source Table:product  Target Table:sales_fact validations initiated *
+16-06-2025 17-11-08 - INFO - * Source Table Count:25  Target Table Count:26 *
+16-06-2025 17-11-08 - INFO - *** ORacle Database connection initiated ***
+16-06-2025 17-11-08 - INFO - *** Null check initiated***
+16-06-2025 17-11-08 - INFO - * Null checks initiated in Target Table *
+16-06-2025 17-11-08 - INFO - Filenames: C:\Users\suren\PycharmProjects\ETLAutomation with pytest\config_TestScenarios/TestScenarios_Cost_Dim.json
+16-06-2025 17-11-08 - INFO - * Target Table:cost_dim validations initiated *
+16-06-2025 17-11-08 - INFO - Filenames: C:\Users\suren\PycharmProjects\ETLAutomation with pytest\config_TestScenarios/TestScenarios_Inventory_Dim.json
+16-06-2025 17-11-08 - INFO - * Target Table:inventory_dim validations initiated *
+16-06-2025 17-11-08 - INFO - Filenames: C:\Users\suren\PycharmProjects\ETLAutomation with pytest\config_TestScenarios/TestScenarios_Product_Dim.json
+16-06-2025 17-11-08 - INFO - * Target Table:product_dim validations initiated *
+16-06-2025 17-11-08 - INFO - Filenames: C:\Users\suren\PycharmProjects\ETLAutomation with pytest\config_TestScenarios/TestScenarios_Sales_Fact.json
+16-06-2025 17-11-08 - INFO - * Target Table:sales_fact validations initiated *
+16-06-2025 17-11-08 - INFO - *** Oracle Database connection initiated ***
+16-06-2025 17-11-08 - INFO - *** Duplicate check initiated***
+16-06-2025 17-11-08 - INFO - * Duplicate checks initiated in Target Table *
+16-06-2025 17-11-08 - INFO - Filenames: C:\Users\suren\PycharmProjects\ETLAutomation with pytest\config_TestScenarios/TestScenarios_Cost_Dim.json
+16-06-2025 17-11-08 - INFO - * Target Table:cost_dim validations initiated *
+16-06-2025 17-11-08 - INFO - Duplicate records found in table cost_dim: P132
+16-06-2025 17-11-08 - INFO - Filenames: C:\Users\suren\PycharmProjects\ETLAutomation with pytest\config_TestScenarios/TestScenarios_Inventory_Dim.json
+16-06-2025 17-11-08 - INFO - * Target Table:inventory_dim validations initiated *
+16-06-2025 17-11-08 - INFO - Duplicate records found in table inventory_dim: P101,2
+16-06-2025 17-11-08 - INFO - Filenames: C:\Users\suren\PycharmProjects\ETLAutomation with pytest\config_TestScenarios/TestScenarios_Product_Dim.json
+16-06-2025 17-11-08 - INFO - * Target Table:product_dim validations initiated *
+16-06-2025 17-11-08 - INFO - Filenames: C:\Users\suren\PycharmProjects\ETLAutomation with pytest\config_TestScenarios/TestScenarios_Sales_Fact.json
+16-06-2025 17-11-08 - INFO - * Target Table:sales_fact validations initiated *
+16-06-2025 17-11-08 - INFO - Duplicate records found in table sales_fact: P101,2
+16-06-2025 17-11-08 - INFO - *** Source & Target column mapping validation initiated ***
+16-06-2025 17-11-08 - INFO - *** Initiated processing of file:TestScenarios_Cost_Dim.json ***
+16-06-2025 17-11-08 - INFO - *** Source Table:cost  Target Table:cost_dim validations initiated ***
+16-06-2025 17-11-08 - ERROR - in file - TestScenarios_Cost_Dim.json: single positional indexer is out-of-bounds
+16-06-2025 17-11-08 - INFO - *** Initiated processing of file:TestScenarios_Inventory_Dim.json ***
+16-06-2025 17-11-08 - INFO - *** Source Table:inventory  Target Table:inventory_dim validations initiated ***
+16-06-2025 17-11-08 - ERROR - in file - TestScenarios_Inventory_Dim.json: single positional indexer is out-of-bounds
+16-06-2025 17-11-08 - INFO - *** Initiated processing of file:TestScenarios_Product_Dim.json ***
+16-06-2025 17-11-08 - INFO - *** Source Table:product  Target Table:product_dim validations initiated ***
+16-06-2025 17-11-08 - INFO - *** Initiated processing of file:TestScenarios_Sales_Fact.json ***
+16-06-2025 17-11-08 - INFO - *** Source Table:product  Target Table:sales_fact validations initiated ***
+16-06-2025 17-11-08 - ERROR - in file - TestScenarios_Sales_Fact.json: single positional indexer is out-of-bounds

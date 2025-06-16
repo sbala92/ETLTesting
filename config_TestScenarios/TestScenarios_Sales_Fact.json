@@ -1,0 +1,22 @@
+{
+    "tc_01_Source & Target Tables": {
+        "s_table": "product",
+        "t_table": "sales_fact"
+    },
+    "tc_02_Verifying Source & Target Record counts": {
+        "s_count": "select count(*) from (SELECT   p.P_ID  ,  p.P_Name , i.Open_Stock + i.Purchase_Stock as tot_stock , i.Units_Sold as units_sold , (i.Open_Stock + i.Purchase_Stock) - i.Units_Sold as Avail_stock , i.Sales_Date  as sales_date   FROM  inventory i JOIN     product p  ON i.P_ID = p.P_ID JOIN   cost c ON i.P_ID = c.P_ID AND i.Sales_Date = c.Sales_Date) a",
+        "t_count": "select count(*) from sales_fact"
+    },
+    "tc_03_Verifying Null values in Target table": {
+        "null_count": "SELECT COUNT(*) FROM SALES_FACT WHERE  p_id is null or p_name is null or tot_stock is null or units_sold is null or Avail_stock is null or sales_date is null",
+        "null_records":"SELECT p_id FROM SALES_FACT WHERE  p_id is null or p_name is null or tot_stock is null or units_sold is null or Avail_stock is null or sales_date is null"
+    },
+    "tc_04_Verifying duplicate records in Target table": {
+        "dup_count": "select count(*) from (SELECT P_ID, COUNT(p_id) FROM SALES_FACT GROUP BY p_id HAVING COUNT(*) > 1)a",
+        "dup_records":"SELECT P_ID, COUNT(p_id) FROM SALES_FACT GROUP BY p_id HAVING COUNT(*) > 1"
+    },
+    "tc_05_Verifying Source & Target Columns mapping": {
+        "s_table": "SELECT  p.p_id  ,  p.P_Name , i.Open_Stock + i.Purchase_Stock as tot_stock, i.Units_Sold as units_sold, (i.Open_Stock + i.Purchase_Stock) - i.Units_Sold as Avail_stock, i.sales_date as sales_date FROM   inventory i JOIN    product p ON i.P_ID = p.P_ID  JOIN cost c ON i.P_ID = c.P_ID AND i.Sales_Date = c.Sales_Date",
+        "t_table": "select  p_id,p_name,tot_stock,units_sold,Avail_stock,sales_date from sales_fact"
+    }
+}

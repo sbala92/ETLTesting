@@ -1,0 +1,27 @@
+{
+    "tc_01_Source & Target Tables": {
+        "s_table": "inventory",
+        "t_table": "inventory_dim"
+    },
+
+    "tc_02_Verifying Source & Target Record counts": {
+        "s_count": "select count(*) from inventory",
+        "t_count": "select count(*) from inventory_dim"
+    },
+
+    "tc_03_Verifying Null values in Target table": {
+        "null_count": "select count(*) from inventory_dim where p_id is null or purchase_stock is null or purchase_stock is null or units_sold is null or Avail_stock is null or sales_date is null",
+        "null_records":"select p_id from inventory_dim where p_id is null or purchase_stock is null or purchase_stock is null or units_sold is null or Avail_stock is null or sales_date is null"
+    },
+
+    "tc_04_Verifying duplicate records in Target table": {
+        "dup_count": "select count(p_id) from inventory_dim group by p_id having count(p_id)>1",
+        "dup_records": "select p_id,count(p_id) from inventory_dim group by p_id having count(p_id)>1"
+    },
+    "tc_05_Verifying Source & Target Columns mapping": {
+        "s_table": " select p_id,open_stock,purchase_stock,units_sold,Avail_stock,sales_date from inventory order by p_id",
+        "t_table": "select p_id,open_stock,purchase_stock,units_sold,Avail_stock,sales_date from inventory_dim order by p_id"
+
+
+    }
+}

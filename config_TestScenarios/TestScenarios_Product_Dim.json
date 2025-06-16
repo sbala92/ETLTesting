@@ -1,0 +1,26 @@
+{
+    "tc_01_Source & Target Tables": {
+        "s_table": "product",
+        "t_table": "product_dim"
+    },
+
+    "tc_02_Verifying Source & Target Record counts": {
+        "s_count": "select count(*) from product",
+        "t_count": "select count(*) from product_dim"
+    },
+
+    "tc_03_Verifying Null values in Target table": {
+        "null_count": "select count(*) from product_dim where p_id is null or p_name is null or price is null or sales_date is null",
+        "null_records":"select p_id from product_dim where p_id is null or p_name is null or price is null or sales_date is null"
+
+    },
+
+    "tc_04_Verifying duplicate records in Target table": {
+        "dup_count": "select count(p_id) from product_dim group by p_id having count(p_id)>1",
+        "dup_records":"select p_id,count(p_id) from product_dim group by p_id having count(p_id)>1"
+    },
+    "tc_05_Verifying Source & Target Columns mapping": {
+        "s_table": "select p_id ,p_name,round(price) as price, sales_date from product order by p_id",
+        "t_table": "select p_id,p_name,price,sales_date from product_dim order by p_id"
+    }
+}
